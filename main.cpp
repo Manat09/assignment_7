@@ -1,7 +1,7 @@
 #include "Text_Preprocessor.h"
 #include <thread>
 #include <fstream>
-
+#include <mutex>
 using namespace std;
 
 int main() {
@@ -23,57 +23,53 @@ int main() {
 
     fstream cop;
     cop.open("../Task_2.txt");
-    string strLine;
-    float total = 0;
-    int count = 0;
+    string str;
+    float sum = 0;
+    int amount = 0;
     vector<float>nums;
 
-    while(getline(cop, strLine)) {
-        count++;
-        float cur = stof(strLine);
+    while(getline(cop, str)) {
+        amount++;
+        float cur = stof(str);
         nums.push_back(cur);
-        total += cur;
+        sum += cur;
     }
 
-    float avg = total / (count*1.0);
+    float average = sum / (amount * 1.0);
 
-    auto thread_one = [](const vector<float>&numbers, float average) {
-        ofstream str("../Thread_1.txt");
+    mutex mu;
+    auto toFile = [&mu](const vector<float>&numbers, float avg) {
+        mu.lock();
+        ofstream str1("../Thread_1.txt");
+        ofstream str2("../Thread_2.txt");
         for(auto to : numbers){
-            if(to > average){
-                str << to_string(to) << "\n";
+            if(to > avg){
+                str1 << to_string(to)<<"\n";
+            }
+            if(to < avg){
+                str2 << to_string(to)<<"\n";
             }
         }
-        str.close();
+        str1.close();
+        str2.close();
+        mu.unlock();
     };
 
-    auto thread_two = [](const vector<float>&numbers, float average) {
-        ofstream str("../Thread_2.txt");
+    auto th_test = [](const vector<float>&numbers, float avg) {
+        ofstream str3("../example.txt");
         for(auto to : numbers){
-            if(to < average){
-                str << to_string(to) << "\n";
+            if(to < avg){
+                str3 << to_string(to)<<"\n";
             }
         }
-        str.close();
+        str3.close();
     };
 
-    auto thread_three = [](const vector<float>&numbers, float average) {
-        ofstream str("../example.txt");
-        for(auto to : numbers){
-            if(to < average){
-                str << to_string(to) << "\n" << "HA";
-            }
-        }
-        str.close();
-    };
+    thread th(toFile, nums, average);
+    thread th2(th_test, nums, average);
 
-    thread th1(thread_one, nums, avg);
-    thread th2(thread_two, nums, avg);
-    thread th3(thread_three, nums, avg);
-
-    th1.join();
+    th.join();
     th2.join();
-    th3.join();
 
     delete text;
 }
