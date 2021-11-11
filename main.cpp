@@ -12,7 +12,7 @@ int main() {
     cin>>word;
     cout << text->search_word(word);
 
-    delete text;
+
 
 
     /*
@@ -74,4 +74,6 @@ int main() {
     th1.join();
     th2.join();
     th3.join();
+
+    delete text;
 }

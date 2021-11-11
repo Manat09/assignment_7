@@ -17,7 +17,7 @@ public:
 
     void preprocess_text();
 
-    string search_word(const std::string &str);
+    string search_word(const std::string &word);
 
     virtual ~Text_Preprocessor();
 };

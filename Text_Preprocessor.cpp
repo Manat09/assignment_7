@@ -12,12 +12,11 @@ Text_Preprocessor::~Text_Preprocessor() {
 void Text_Preprocessor::preprocess_text() {
     cop.open(file_name);
 
-    string data;
+    string text;
     vector<string>all_data;
     while(cop){
-        getline(cop, data);
-        //cout << data << "\n";
-        all_data.push_back(data);
+        getline(cop, text);
+        all_data.push_back(text);
     }
     vector<string>processed_data;
     for(auto const &to : all_data){
@@ -88,21 +87,21 @@ void Text_Preprocessor::preprocess_text() {
     cop.close();
 }
 
-string Text_Preprocessor::search_word(const std::string &str) {
+string Text_Preprocessor::search_word(const std::string &word) {
     cop.open(file_name);
 
-    string data;
+    string text;
     vector<string>all_data;
     while(cop){
-        getline(cop, data);
-        all_data.push_back(data);
+        getline(cop, text);
+        all_data.push_back(text);
     }
     vector<string>processed_data;
     for(auto const &to : all_data) {
         string final_str;
         for (int i = 0; i < (int) to.size(); i++) {
-            if(to.substr(i, str.size()) == str && to[i+str.size()] == ' ' && to[i-str.size()] == ' ') {
-                cout<<to.substr(i, str.size())<<endl;
+            if(to.substr(i, word.size()) == word && to[i + word.size()] == ' ' && to[i - word.size()] == ' ') {
+                cout << to.substr(i, word.size()) << endl;
                 return "I Found";
             }final_str += tolower(to[i]);
         }
