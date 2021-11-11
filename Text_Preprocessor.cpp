@@ -6,16 +6,16 @@ using namespace std;
 Text_Preprocessor::Text_Preprocessor(const string &fileName) : file_name(fileName) {}
 
 Text_Preprocessor::~Text_Preprocessor() {
-    cop.close();
+    obj.close();
 }
 
 void Text_Preprocessor::preprocess_text() {
-    cop.open(file_name);
+    obj.open(file_name);
 
     string text;
     vector<string>all_data;
-    while(cop){
-        getline(cop, text);
+    while(obj){
+        getline(obj, text);
         all_data.push_back(text);
     }
     vector<string>processed_data;
@@ -84,16 +84,16 @@ void Text_Preprocessor::preprocess_text() {
         processed_data.push_back(final_str);
     }
     processedData = processed_data;
-    cop.close();
+    obj.close();
 }
 
 string Text_Preprocessor::search_word(const std::string &word) {
-    cop.open(file_name);
+    obj.open(file_name);
 
     string text;
     vector<string>all_data;
-    while(cop){
-        getline(cop, text);
+    while(obj){
+        getline(obj, text);
         all_data.push_back(text);
     }
     vector<string>processed_data;
@@ -108,7 +108,7 @@ string Text_Preprocessor::search_word(const std::string &word) {
         processed_data.push_back(final_str);
     }
 
-    cop.close();
+    obj.close();
     return "Word is not found";
 }
 

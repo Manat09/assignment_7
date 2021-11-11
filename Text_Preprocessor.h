@@ -10,7 +10,7 @@ using namespace std;
 class Text_Preprocessor {
 public:
     string file_name;
-    ifstream cop;
+    ifstream obj;
     vector<string>processedData;
 
     Text_Preprocessor(const string &fileName);

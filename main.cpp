@@ -21,14 +21,14 @@ int main() {
      * ******************************************************************************************************
      */
 
-    fstream cop;
-    cop.open("../Task_2.txt");
+    fstream obj;
+    obj.open("../Task_2.txt");
     string str;
     float sum = 0;
     int amount = 0;
     vector<float>nums;
 
-    while(getline(cop, str)) {
+    while(getline(obj, str)) {
         amount++;
         float cur = stof(str);
         nums.push_back(cur);
